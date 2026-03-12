@@ -1,5 +1,5 @@
 {
-  "name": "ex01_cjs",
+  "name": "ex04_async_cjs",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -7,13 +7,10 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.cjs",
-    "debug": "nodemon index.cjs"
+        "debug": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  },
-  "dependencies": {
-    "dotenv": "^17.3.1"
   }
+ 
 }

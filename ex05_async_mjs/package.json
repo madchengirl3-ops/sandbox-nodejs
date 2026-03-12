@@ -1,19 +1,16 @@
 {
-  "name": "ex01_cjs",
+  "name": "ex05_async_mjs",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.cjs",
-    "debug": "nodemon index.cjs"
+        "debug": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  },
-  "dependencies": {
-    "dotenv": "^17.3.1"
   }
+ 
 }
