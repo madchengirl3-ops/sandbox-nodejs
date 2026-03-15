@@ -1,0 +1,2 @@
+Program finished
+Program error
