@@ -1,6 +1,6 @@
-import { booksHandler } from "./booksHandler";
-import { defaultHandler } from "./defaultHandler";
-import { usersHandler } from "./usersHandler";
+import { booksHandler } from "./booksHandler.js";
+import { defaultHandler } from "./defaultHandler.js";
+import { usersHandler } from "./usersHandler.js";
 export const mainHandler = (req, res) => {
 
     const {url} = req;
