@@ -5,6 +5,7 @@ export const usersHandler = (req, res) => {
     {
       status: "TBD", 
       message: "UsersHandler under construction!"
-    }));
+    })
+  );
  
 };

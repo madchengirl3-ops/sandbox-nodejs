@@ -5,6 +5,7 @@ export const defaultHandler = (req, res) => {
     {
       status: "error", 
       message: "resource not found"
-    }));
+    })
+  );
  
 };

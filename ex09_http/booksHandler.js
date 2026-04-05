@@ -1,8 +1,11 @@
+import DataSource from "./dataSource.js";
+const dataSource = new DataSource('db/database.json');
+
 export const booksHandler = (req, res) => {
 
   const {method, url} = req;
 
-  console.log('url == ', url);
+  //console.log('url == ', url);
       const urlSplitted = url.split('?');
       const urlString = urlSplitted[0];
       const qweryString = urlSplitted[1];
@@ -14,54 +17,69 @@ export const booksHandler = (req, res) => {
 
       let id = null;
       if(urlArr.length === 4) {
-        const id = +urlArr[urlArr.length-1];
+        id = +urlArr[urlArr.length-1];
+
+let re = null;
+let bodyText = '';
 
 
   switch (method) {
     case 'POST':
 
-    res.writeHead(201, {'Content-Type': 'application/json'});
-  res.end(`{
-    "id": 1,
-    "name":"Преступление и наказание",
-    "author":"Ф. М. Достоевский",
-    "description":"социально-психологический и социально-философский роман"}`);
+        req.on('data', (chunk) => {
+      console.log('body data chunk detected!');
+      bodyText+=chunk;
+    });
+
+    req.on('end', () => {
+
+        try {
+          console.log('body end detected!', bodyText);
+          const body = JSON.parse(bodyText);
+          console.log('body', body);
+
+          re = JSON.stringify(dataSource.create(body));
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(re);
+
+        } catch (e) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(
+            {
+              status: "error",
+              message: e.toString()
+            })
+          );
+        }
+      });
       return;
+
+    
     case 'GET':
+
+    
       if (id) {
+        re = JSON.stringify(dataSource.getOne(id));
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(`{
-         "id": 1,
-         "name":"Преступление и наказание",
-         "author":"Ф. М. Достоевский",
-         "description":"социально-психологический и социально-философский роман"}`);
+        res.end(re);
       } else {
+        re = JSON.stringify(dataSource.getAll());
         res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(`[{
-    "id": 1,
-    "name":"Преступление и наказание",
-    "author":"Ф. М. Достоевский",
-    "description":"социально-психологический и социально-философский роман"}]`);
+        res.end(re);
       }
 
-    res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(`[{
-    "id": 1,
-    "name":"Преступление и наказание",
-    "author":"Ф. М. Достоевский",
-    "description":"социально-психологический и социально-философский роман"}]`);
-
-      return;
+    return;
     case 'PATCH':
     case 'PUT':
+
+    dataSource.update(id, {author: 'HardCode'});
+
+    re = JSON.stringify(dataSource.getOne(id));
     res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(`{
-    "id": 1,
-    "name":"Преступление и наказание!",
-    "author":"Ф. М. Достоевский",
-    "description":"социально-психологический и социально-философский роман"}`);
+  res.end(re);
       return;
     case 'DELETE':
+      dataSource.delete(id);
       res.writeHead(204);
   res.end(null);
       return;
@@ -71,7 +89,7 @@ export const booksHandler = (req, res) => {
   res.end(JSON.stringify(
     {
       status: "error", 
-      message: "Method not imlemented"
+      message: "Method not implemented"
     }));
  
 };

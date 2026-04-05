@@ -1,9 +1,11 @@
 import { booksHandler } from "./booksHandler.js";
 import { defaultHandler } from "./defaultHandler.js";
 import { usersHandler } from "./usersHandler.js";
+import { errorHandler } from "./errorHandler.js"
 export const mainHandler = (req, res) => {
 
-    const {url} = req;
+    try {
+        const {url} = req;
 
     if(url.startsWith('/api')) {
 
@@ -20,6 +22,13 @@ export const mainHandler = (req, res) => {
     } 
 
     return defaultHandler(req, res);
+
+    } catch(e) {
+        return errorHandler(req, res, e);
+
+    }
+
+    
     
  
 };
