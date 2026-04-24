@@ -26,7 +26,7 @@ let bodyText = '';
   switch (method) {
     case 'POST':
 
-        req.on('data', (chunk) => {
+              req.on('data', (chunk) => {
       console.log('body data chunk detected!');
       bodyText+=chunk;
     });
@@ -39,7 +39,7 @@ let bodyText = '';
           console.log('body', body);
 
           re = JSON.stringify(dataSource.create(body));
-          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.writeHead(201, {'Content-Type': 'application/json'});
           res.end(re);
 
         } catch (e) {
